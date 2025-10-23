@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>気分別BGMサイト - MoodTune</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background-image 1s ease-in-out;
+    }
+    h1 { font-size: 2.2em; margin-bottom: 20px; }
+    select, button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      margin: 10px;
+    }
+    button {
+      background-color: #ffffff33;
+      color: white;
+      cursor: pointer;
+      border: 1px solid white;
+      transition: 0.3s;
+    }
+    button:hover { background-color: #ffffff55; }
+    #message {
+      font-size: 1.5em;
+      margin-top: 30px;
+      text-shadow: 1px 1px 4px #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>今の気分に合わせてBGMを選ぼう🎧</h1>
+
+  <div>
+    <select id="mood">
+      <option value="happy">😄 楽しい</option>
+      <option value="sad">😢 悲しい</option>
+      <option value="sleepy">😴 眠い</option>
+      <option value="angry">😡 イライラ</option>
+      <option value="calm">🌿 落ち着きたい</option>
+    </select>
+    <button onclick="playMusic()">再生</button>
+  </div>
+
+  <div id="message"></div>
+
+  <audio id="bgm" controls autoplay hidden></audio>
+
+  <script>
+    const bgm = document.getElementById("bgm");
+    const message = document.getElementById("message");
+    const body = document.body;
+
+    function playMusic() {
+      const mood = document.getElementById("mood").value;
+      const data = {
+        happy: {
+          music: "music/happy.mp3",
+          bg: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+          text: "笑顔がいちばんのBGM！"
+        },
+        sad: {
+          music: "music/sad.mp3",
+          bg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+          text: "泣いてもいい日もある。"
+        },
+        sleepy: {
+          music: "music/sleepy.mp3",
+          bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+          text: "おやすみなさい、いい夢を。"
+        },
+        angry: {
+          music: "music/angry.mp3",
+          bg: "https://images.unsplash.com/photo-1509223197845-458d87318791",
+          text: "深呼吸して、心をリセット。"
+        },
+        calm: {
+          music: "music/calm.mp3",
+          bg: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          text: "静けさの中に安らぎを。"
+        }
+      };
+
+      const moodData = data[mood];
+      bgm.src = moodData.music;
+      bgm.play();
+      body.style.backgroundImage = `url(${moodData.bg})`;
+      message.textContent = moodData.text;
+    }
+  </script>
+</body>
+</html>
